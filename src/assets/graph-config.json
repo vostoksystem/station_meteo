@@ -1,0 +1,69 @@
+{
+	"type": "line",
+	"height": 500,
+	"options": {
+		"theme" : {
+			"mode": "light" 
+		},
+		"chart": {
+			"toolbar": {
+				"show": false
+			}
+		},
+		"dataLabels": {
+			"enabled": false
+		},
+		"colors": ["#ff0617"],
+		"stroke": {
+			"width": 1,
+			"lineCap": "butt",
+			"curve": "straight"
+		},
+		"markers" : {
+			"size" : 0			
+		},
+		
+		"xaxis": {
+			"type": "datetime",
+			"axisTicks": {
+				"show": false
+			},
+			"axisBorder": {
+				"show": false
+			},
+			"labels": {
+				"style": {
+					"colors": "#616161",
+					"fontSize": "12px",
+					"fontFamily": "inherit",
+					"fontWeight": 400
+				}
+			}
+		},
+		"yaxis": {
+			"decimalsInFloat": 2,
+			"labels": {
+				"style": {
+					"colors": "#616161",
+					"fontSize": "12px",
+					"fontFamily": "inherit",
+					"fontWeight": 400
+				}
+			}
+		},
+		"tooltip": {
+			"theme": "light"
+		},
+		"legend" : {
+			"show" : true,
+			"showForSingleSeries" : true,
+			"horizontalAlign" : "center",
+			
+			"fontSize" : "16px",
+			"fontFamily" : "inherit",
+			"fontWeight" : 400
+		}
+	}
+}
+
+					  

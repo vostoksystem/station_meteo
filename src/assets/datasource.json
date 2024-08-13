@@ -1,0 +1,30 @@
+{
+	"dummy" : {
+		"provider" : "DummyProvider"
+	},
+	"dummy-csv" : {
+		"provider" : "CsvProvider",
+		"params" : {
+			"url" : "/data/dummy.csv",
+			"separator" : ","
+		}
+	},
+	"rain-level" : {
+		"provider" : "CsvProvider",
+		"params" : {
+			"url" : "/data/20240730_rain-level.csv",
+			"separator" : ",",
+			"transform" : "iso8601"
+		},
+		"interpolation" : "simpleInterpolation"
+	},
+	"temperature" : {
+		"provider" : "CsvProvider",
+		"params" : {
+			"url" : "/data/20240730_temperature.csv",
+			"separator" : ";",
+			"transform" : "bigEndian"
+		},
+		"interpolation" : "simpleInterpolation"
+	}
+}
