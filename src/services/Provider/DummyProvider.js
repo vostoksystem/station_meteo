@@ -1,5 +1,5 @@
 /**
- * Ce simple "provider" est utilisé pour fournier des données statiques pour les tests
+ * Ce simple "provider" est utilisé pour fournir des données statiques pour les tests
  * 
  * @class
  */

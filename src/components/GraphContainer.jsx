@@ -18,9 +18,9 @@ import graphConfig from "../assets/graph-config.json" // la configuration géné
 
 
 /**
- * @typeref {Object} GraphInfo - permet de garder une trace des changements de taile sur le graphique
- * @property {integer} width - taille actuelle de la fenetre du graphique
- * @property {integer} size - taille actuelle du nombre de données récupéré depuis le dataset 
+ * @typeref {Object} GraphInfo - permet de garder une trace des changements de taille sur le graphique
+ * @property {integer} width - taille actuelle de la fenêtre du graphique
+ * @property {integer} size - taille actuelle du nombre de données récupérées depuis le dataset 
  */
 
 /**
@@ -32,7 +32,7 @@ import graphConfig from "../assets/graph-config.json" // la configuration géné
 
 /**
  * Conteneur pour un graphique
- * Celui ci affichera le descriptif, des selecteurs pour filtrer les résultat et un graphique pour afficher les données
+ * Celui ci affichera le descriptif, des selecteurs pour filtrer les résultats et un graphique pour afficher les données
  * 
  * @param {Object} props - la liste des propriétés du composant
  * @param {string} props.dataset - le nom du dataset à afficher
@@ -44,13 +44,13 @@ const GraphContainer = ({dataset, info, config}) => {
 
 	/**
 	 * Référence sur le dom qui va contenir le graphique
-	 * On va écouter les changement de taille pour en déterminer le nombre maximun de données à afficher
+	 * On va écouter les changements de taille pour en déterminer le nombre maximun de données à afficher
 	 * @type type
 	 */
 	const containerRef = useRef()
 	
 	/**
-	 * Référence locale sur la taille du graphique, mis à jour lors d'un redimentionnement de la fenêtre
+	 * Référence locale sur la taille du graphique, mise à jour lors d'un redimentionnement de la fenêtre
 	 * @type{GraphInfo}
 	 */
 	const dimensions = useRef({width: 0, size: 0})
@@ -76,7 +76,7 @@ const GraphContainer = ({dataset, info, config}) => {
 	const [loading, setLoading] = useState(true)
 	
 	/**
-	 * La configuration (et les données) actuelle utilisé pour afficher le graphique
+	 * La configuration (et les données) actuelle utilisée pour afficher le graphique
 	 * @type {Object}
 	 */
 	const [chartConfig, setChartConfig] = useState(null) // configuration du graph (et données)
@@ -95,7 +95,7 @@ const GraphContainer = ({dataset, info, config}) => {
 			return;
 		}
 
-		// on va traité de nouvelle données, on passe en "attente"
+		// on va traiter de nouvelles données, on passe en "attente"
 		setLoading(true);
 
 		// chargement des données depuis le dataset et création de la config du graphe
@@ -103,7 +103,7 @@ const GraphContainer = ({dataset, info, config}) => {
 			try {
 				console.log(`dataset : ${dataset} --- size : ${size}`)
 
-				// récupéraiton des données correspondant à la série
+				// récupération des données correspondant à la série
 				const data = await DataService.getInstance().dataSet(dataset, size, filters)
 
 				// merge de la config "locale" avec les valeurs standards
@@ -123,7 +123,7 @@ const GraphContainer = ({dataset, info, config}) => {
 					}
 				]
 
-				// ok, on rafraichie le graphe et on commute l'affichage
+				// ok, on rafraichit le graphe et on commute l'affichage
 				setChartConfig(conf)
 				setLoading(false)
 
@@ -140,8 +140,8 @@ const GraphContainer = ({dataset, info, config}) => {
 	 */
 	const poolData = () => {
 		
-		// on temporise l'actualisation des données afin d'avoir une interface plus fluide, l'actualisation effective ne se faisant après 250ms
-		// si une demande est effectué pendant ce laps de temps (exemple redimentionnement de la fenetre qui envoi plusieurs event), on annule la précedente demande pour la remplacer par la dernière
+		// on temporise l'actualisation des données afin d'avoir une interface plus fluide, l'actualisation effective ne se fera après 250ms
+		// si une demande est effectuée pendant ce laps de temps (exemple redimentionnement de la fenêtre qui envoi plusieurs event), on annule la précédente demande pour la remplacer par celle ci
 		try {
 			clearTimeout(timeout.current)
 		} catch (e) {
@@ -183,7 +183,7 @@ const GraphContainer = ({dataset, info, config}) => {
 	}, [dates])
 
 	/**
-	 * On "écoute" les changements de taile du container du graphique
+	 * On "écoute" les changements de taille du container du graphique
 	 * Afin de miniminer les calculs on adapte la taille des données à afficher par rapport à la taille du graph à l'écran
 	 */
 	useEffect(() => {
@@ -191,11 +191,11 @@ const GraphContainer = ({dataset, info, config}) => {
 			return;
 		}
 
-		// on place un "observer" sur les changement de taille du container du graphe
+		// on place un "observer" sur les changements de taille du container du graphe
 		const observer = new ResizeObserver((entries) => {
 			// changement de taille
 			for (let entry of entries) {
-				// on s'interesse seulement aux changements de la largeur
+				// on s'intéresse seulement aux changements de la largeur
 				if (entry.contentRect.width == dimensions.current.width) {
 					return;
 				}
@@ -206,7 +206,7 @@ const GraphContainer = ({dataset, info, config}) => {
 				})
 
 
-				// si la nouvelle taille de la fenetre est plus petite que le nombre actuel d'échantillons ce n'est pas la peine de
+				// si la nouvelle taille de la fenêtre est plus petite que le nombre actuel d'éléments ce n'est pas la peine de
 				// faire une nouvelle requette, on a déjà suffisament de données pour afficher le graphe (l'interpolation sera faite par le composant chart)
 				if (dimensions.current.width <= dimensions.current.size) {
 					return;
@@ -214,12 +214,11 @@ const GraphContainer = ({dataset, info, config}) => {
 
 				// ok, on rafraichie les données et le graphe
 				// 
-				// On commence par fixer la nouvelle taille des données actuelle
-				// Sans cela, avec les differentes latences possible entre redimentionne et temps de traitement on pourrait se retrouver avec des rafraichissements en serie
-				// La seul la premiere demande sera effectivment executé
+				// On commence par fixer la nouvelle taille des données
+				// Sans cela, avec les différentes latences possible entre redimentionnement et temps de traitement on pourrait se retrouver avec des rafraichissements en serie
 				dimensions.current.size = dimensions.current.width
 				
-				// et on fini par placer la demande de réactialisation dans la fille d'attente
+				// et on fini par placer la demande de réactualisation dans la fille d'attente
 				poolData()
 				
 				return;

@@ -38,9 +38,9 @@ const GraphWidget = ( ) => {
 		
 	/**
 	 * enregistrement de l'onglet sélectionné dans le local storage
-	 * @NOTA : ce n'est pas la peine de passer par un state, le composant "Tabs" s'occupe déjà en interne de préservé l'état entre les render
+	 * @NOTA : ce n'est pas la peine de passer par un state, le composant "Tabs" s'occupe déjà en interne de préserver l'état entre les render
 	 * 
-	 * @param {string} tabId - l'id unique du tab afficé, dépende de la configuration
+	 * @param {string} tabId - l'id unique du tab affiché, dépend de la configuration
 	 * @returns {void}
 	 */
 	const changetab = (tabId) => localStorage.setItem( 'graphtab', tabId )

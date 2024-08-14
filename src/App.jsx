@@ -5,7 +5,7 @@ import { Navbar, Typography } from "@material-tailwind/react"
 import GraphWidget from './components/GraphWidget'
 
 /**
- * le composant principal del'application, composé d'un header, ensuite d'un unique widget
+ * le composant principal de l'application, composé d'un header, ensuite d'un unique widget
  *  
  * @returns {React.Composant}
  */

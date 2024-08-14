@@ -9,14 +9,14 @@ import simpleInterpolation from "./InterpolationMethod/simpleInterpolation"
 import datasource from "../assets/datasource.json"
 
 /**
- * @typedef {Object} DataPoint - décrit un point sur le pg
+ * @typedef {Object} DataPoint - décrit un point de mesure
  * @property {Date} date - date correspondant à la mesure 
- * @property {(float|integer)} value - la valeur associé à la date
+ * @property {(float|integer)} value - la valeur associée à la date
  */
 
 
 /**
- * Ce service permet de centraliser les demandes d'accès aux données, en fonction d'un id, est ce quel que soit leurs localisations ou leurs formats source.
+ * Ce service permet de centraliser les demandes d'accès aux données, en fonction d'un id, et ce quel que soit leurs localisations ou leurs formats source.
  * Avec un service on peut aussi ajouter une gestion de cache, une gestion fifo des demandes, appliquer des régles de sécurités ou de validation des données reçues
  * 
  * @class
@@ -39,7 +39,7 @@ class DataService {
 	#interpolationFactory = { simpleInterpolation }
     
 	// on met en place un cache local afin de minimiser les requettes
-	// Ici comme exemple simplement au niveau du singleton main on pourait aussi l'ajouter au local storage afin de faire de l'affichage hors connexion
+	// Ici au niveau du singleton main on pourait aussi l'ajouter au local storage afin de faire de l'affichage hors connexion
     #cache = {}
 
     /**
@@ -64,8 +64,8 @@ class DataService {
 
     /**
      * Récupére un set de données, borné à maxitem
-	 * Les filtres sont préalablement appliqué dans l'ordre du tableau.
-	 * Les filtres doivennt être nommé implicitement en fonction du filtrage réalisé. Deux filtres s'applicant sur des dates différentes doivent être nommé différement
+	 * Les filtres sont préalablement appliqués dans l'ordre du tableau.
+	 * Les filtres doivent être nommés implicitement en fonction du filtrage réalisé. Deux filtres s'applicant sur des dates différentes doivent être nommés différement
 	 * 
      * @param {string} id - l'id du type de données attendu
 	 * @param {integer} maxItem - nombre maximum d'éléments à retourner depuis le dataset (0 pour tous)
@@ -80,18 +80,18 @@ class DataService {
 		
 		console.log(`key : ${key}`)
 		
-		// @nota : dans une "full" application il faudrait mettre en place une fifo sur les demandes afin de traiter les requettes multiples  avec une latence courte 
+		// @nota : dans une "full" application il faudrait mettre en place une fifo bloquante afin de ne pas lancer parallèlement plusieurs requettes portant sur les mêmes données
 		if( this.#cache[key]) {
 			console.log(`requette sur ${id} depuis le cache`)
 			return this.#cache[key]
 		}
 		
-        // on verifie si ce dataset peut être résolu
+        // on vérifie si ce dataset peut être résolu
         if( datasource[id] == undefined) {
             throw new Error( `datasource ${id} inconnu`)
         }
 
-		// nouveau set de données, on va recherche dans la liste des provider celui correspondant à "id", les données seront ensuite converti dans le format souhaité pour l'affichage par la méthode d'interpolation associée
+		// nouveau set de données, on va recherche dans la liste des provider celui qui correspondant à "id", les données seront ensuite converti dans le format souhaité pour l'affichage par la méthode d'interpolation associée
         try {
             const provider = new (this.#providerFactory[ datasource[id].provider ])(datasource[id].params)
             
@@ -120,7 +120,7 @@ class DataService {
 				data = data.slice(0, maxItem)
 			}
             
-            //on ajoute au cache
+            // on ajoute au cache
 			this.#cache[key] = data
 				
             return data

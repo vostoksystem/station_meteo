@@ -5,14 +5,14 @@ import iso8601 from "../TransformMethod/iso8601"
 
 
 /**
- * @typeref {Object} ParamsCsv - les paramétre pour le type de provider "csv"
+ * @typeref {Object} ParamsCsv - les paramètres pour le type de provider "csv"
  * @property {string} params.url - l'url vers le fichier csv, locale ou distante
  * @property {string} params.separator - le séparateur à utiliser, "," par défaut
  * @property {string} params.transform - le nom de la méthode de transformation à appliquer sur les données, par défaut d3.autoType
  */
 
 /**
- * Ce provider prends en charge la transformation de fichier csv en tableau json
+ * Ce provider prend en charge la transformation de fichier csv en tableau json
  * Les paramètres sont fournis par le DataService depuis la configuration (datasource.json)
  * 
  * @class
@@ -27,7 +27,7 @@ class CsvProvider {
 	
 	/**
 	 * 
-	 * @param {ParamsCsv} params - les paramètres de configuration de ce prvider comme l'url du fichier source
+	 * @param {ParamsCsv} params - les paramètres de configuration de ce provider comme l'url du fichier source
 	 * @returns {CsvProvider}
 	 */
     constructor( params ) {		
@@ -35,7 +35,7 @@ class CsvProvider {
     }
 
 	/**
-	 * Recupére les données en fonction des paramétres du dataset et des filtres
+	 * Recupère les données en fonction des paramètres du dataset et des filtres
 	 * @returns {Object[]} - le tableau des valeurs du csv, converties en json
 	 * 
 	 */

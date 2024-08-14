@@ -17,7 +17,7 @@ import { fr } from 'date-fns/locale'
  * Ce composant permet de selectionner une plage de date au travers de deux selecteurs de dates
  * 
  * @param {Object} props
- * @params {function} props.dateSelected - le callback utilisé pour indiquer qu'une date a changé, la méthode attend un paramétre {DateRange}
+ * @params {function} props.dateSelected - le callback utilisé pour indiquer qu'une date a changé, la méthode attend un paramètre {DateRange}
  * @params {boolean} props.disabled - si a true les selecteurs sont désactivés
  * @returns {React.Component}
  */
@@ -41,14 +41,14 @@ const DatePicker = ({dateSelected, disabled}) => {
 	const datesRef = useRef( { start: start, end: end } )
 	
 	/**
-	 * Quel selecteur de date est ouvert ; il ne peut y en avoir qu'un à la fois, valeurs possibles : "none", "start", "end"
+	 * Quel selecteur de date est ouvert ; il ne peut y en avoir qu'un à la fois, valeurs possibles : null, "start", "end"
 	 * @type {string}
 	 */
     const [open, setOpen] = useState(null)
 
 	/**
-	 * Le css à utilsier pour les selecteurs de dates
-	 * Les propriété correspondent à celels attendu par le champs classNames d'un {DayPicker}
+	 * Le css à utiliser pour les selecteurs de dates
+	 * Les propriétés correspondent à celles attendu par le champ classNames d'un {DayPicker}
 	 * @type {Object}
 	 */
     const css = {
