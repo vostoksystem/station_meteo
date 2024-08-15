@@ -14,7 +14,7 @@
 		"params" : {
 			"url" : "/data/20240730_rain-level.csv",
 			"separator" : ",",
-			"transform" : "iso8601"
+			"transform" : "bigEndian"
 		},
 		"interpolation" : "simpleInterpolation"
 	},
@@ -23,7 +23,7 @@
 		"params" : {
 			"url" : "/data/20240730_temperature.csv",
 			"separator" : ";",
-			"transform" : "bigEndian"
+			"transform" : "iso8601"
 		},
 		"interpolation" : "simpleInterpolation"
 	}

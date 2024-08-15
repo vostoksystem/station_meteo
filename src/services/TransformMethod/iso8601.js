@@ -1,4 +1,4 @@
-import moment from "moment"
+import { parse } from "date-fns"
 
 /**
  *  Convertisseur à utiliser lors du chargement des données depuis l'import csv (entre autre)
@@ -11,7 +11,7 @@ import moment from "moment"
  */
 export default (d) => {
 	return {
-		"date" : moment(d.date, 'YYYY-MM-DD').toDate(),
+		"date" : parse(d.date, "yyyy-MM-dd", new Date() ),
 		"value" : d.value
 	}
 }
