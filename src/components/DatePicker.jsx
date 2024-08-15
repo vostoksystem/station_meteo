@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef, memo } from "react"
-import { Input, Popover, PopoverHandler, PopoverContent } from "@material-tailwind/react"
-import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline"
-import { DayPicker } from "react-day-picker"
+import { Input, Popover, PopoverHandler, PopoverContent, IconButton, Typography } from "@material-tailwind/react"
+import { ChevronRightIcon, ChevronLeftIcon, ChevronDoubleRightIcon, ChevronDoubleLeftIcon } from "@heroicons/react/24/outline"
+import { DayPicker, useDayPicker } from "react-day-picker"
 import "react-day-picker/style.css"
  
-import { format } from "date-fns"
+import { format, sub, add } from "date-fns"
 import { fr } from 'date-fns/locale'
 
 /**
@@ -110,6 +110,51 @@ const DatePicker = ({dateSelected, disabled}) => {
 	   onClick: () => setOpen(open == "end" ? null : "end")
 	 }
   
+  
+	/**
+   * Composant local pour remppalcer la navigation originale d'un DatPicker en ajoutant des bouton  "année précédente", "année suivante"
+   * @param {Object} props - propriétés du composant
+   * @param {Object} calendarMonth - informations sur le selecteur 
+   * @returns {React.component}
+   */
+	const CustomMonthCaption = ({calendarMonth}) => {
+		const { goToMonth } = useDayPicker()
+		return (
+			<>
+				<div className= "flex justify-between">
+
+					<a href="#" onClick={ () => goToMonth(sub(calendarMonth.date, {years:1})) } title="Année précédente">
+						<IconButton variant="text" className="text-gray-900">
+							<ChevronDoubleLeftIcon className="w-full h-full" />
+						</IconButton>
+					</a>
+
+					<a href="#" onClick={ () => goToMonth(sub(calendarMonth.date, {months:1})) } title="Mois précédent">
+						<IconButton variant="text" className="text-gray-900">
+							<ChevronLeftIcon className="w-full h-full" />
+						</IconButton>
+					</a>
+
+					<Typography className="flex-1 text-gray-900  text-sm font-bold my-auto text-center">{ format(calendarMonth.date, "MMM yyy", { locale: fr }) }</Typography>
+
+
+					<a href="#" onClick={ () => goToMonth(add(calendarMonth.date, {months:1})) } title="Mois suivant">
+						<IconButton variant="text" className="text-gray-900">
+							<ChevronRightIcon className="w-full h-full"/>
+						</IconButton>
+					</a>
+
+					<a href="#" onClick={ () => goToMonth(add(calendarMonth.date, {years:1})) } title="Année suivante">
+						<IconButton variant="text" className="text-gray-900">
+							<ChevronDoubleRightIcon className="w-full h-full" />
+						</IconButton>
+					</a>
+
+				</div>
+			</>
+		)
+	}
+  
   return (		
 	<div className="flex flex-column gap-2 pt-2">
 		
@@ -130,6 +175,10 @@ const DatePicker = ({dateSelected, disabled}) => {
             onSelect={setStart}
             showOutsideDays
             classNames={ css }	  
+			hideNavigation
+			components={{
+				MonthCaption: CustomMonthCaption
+			}}
           />
         </PopoverContent>
       </Popover>
@@ -151,6 +200,10 @@ const DatePicker = ({dateSelected, disabled}) => {
             onSelect={setEnd}
             showOutsideDays
             classNames={ css }			
+			hideNavigation
+			components={{
+				MonthCaption: CustomMonthCaption
+			}}
           />
         </PopoverContent>
       </Popover>
